@@ -3,6 +3,11 @@ let i16;
 let wasm;
 
 {
+  const WASM_BYTES = await fetch(
+  "https://raw.githubusercontent.com/evanwashere/wasm/master/src/opus/opus.wasm"
+  )
+    .then((e) => e.arrayBuffer())
+    .then((e) => new Uint8Array(e));
   const module = new WebAssembly.Module(WASM_BYTES);
   const instance = new WebAssembly.Instance(module, {
     wasi_snapshot_preview1: { fd_seek() {}, fd_write() {}, fd_close() {}, proc_exit() {} },
